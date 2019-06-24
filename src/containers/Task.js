@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleDone, deleteTask, editTask } from '../actions';
+import { Row, List, Form, Button, Input, Icon, Typography } from 'antd';
 
 export class Task extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      edit: false,
-      new_value: 'new_value',
-    };
+    this.state = { edit: false, new_value: 'new_value' };
   }
 
   toggleEdit = () => {
@@ -30,30 +28,48 @@ export class Task extends Component {
   renderTask = () => {
     if (this.state.edit) {
       return(
-        <form onSubmit={(event) => {
-          this.props.editTask(event, this.props.index, this.state.new_value);
-          this.setState({ edit: false });
-        }}>
-          <input value={this.state.new_value} onChange={this.onChange} />
-          <button>Submit</button>
-        </form>
+        <Form layout="inline" onSubmit={(event) => {
+            this.props.editTask(event, this.props.index, this.state.new_value);
+            this.setState({ edit: false });
+          }
+        }>
+          <Form.Item>
+            <Input value={this.state.new_value} onChange={this.onChange} />
+          </Form.Item>
+          <Form.Item style={{ marginRight: '0px' }}>
+            <Button type="primary" htmlType="submit">EDIT TASK</Button>
+          </Form.Item>
+        </Form>
       );
     }
     return(
-      <div>
-        <span onClick={() => this.props.toggleDone(this.props.index)}>
-          {this.props.task.done ? '[X]' : '[ ]'}
-        </span>
-        <span> {this.props.task.title}</span>
-        <span onClick={this.toggleEdit}> (edit)</span>
-        <span onClick={() => this.props.deleteTask(this.props.index)}> (delete)</span>
-      </div>
+      <Row type="flex" justify="space-between" align="middle">
+        <Row type="flex" align="middle">
+          <Icon onClick={() => this.props.toggleDone(this.props.index)}
+                style={{ fontSize: '24px', marginRight: '4px' }}
+                type={this.props.task.done ? 'check-square' : 'border'}
+          />
+          <Typography.Text strong delete={this.props.task.done}>
+            {this.props.task.title}
+          </Typography.Text>
+        </Row>
+        <div>
+          <Button type="info" onClick={this.toggleEdit}>
+            <Icon type="edit" />
+          </Button>
+          <Button type="danger"
+                  onClick={() => this.props.deleteTask(this.props.index)}
+          >
+            <Icon type="delete" />
+          </Button>
+        </div>
+      </Row>
     );
   }
 
   render() {
     return (
-      <li style={{display: this.displayTask()}}>{ this.renderTask() }</li>
+      <List.Item style={{display: this.displayTask()}}>{ this.renderTask() }</List.Item>
     );
   }
 }

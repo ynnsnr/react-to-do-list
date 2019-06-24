@@ -1,14 +1,15 @@
 import React from 'react';
 import Task from '../containers/Task';
+import { List } from 'antd';
 
-const List = props => (
-  <ul>
+const TasksList = props => (
+  <List>
     {
       props.tasks.map((task, index) =>
         <Task task={task} key={index} index={index} />
       )
     }
-  </ul>
+  </List>
 );
 
-export default List;
+export default TasksList;
