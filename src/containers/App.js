@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addTask, showDoneTasks } from '../actions';
 import {
-  Layout, Row, Progress, Form, Button, Input, Icon, Typography
+  Layout, Row, Progress, Form, Button, Input, Icon, Typography, Divider
 } from 'antd';
 
 const { Title } = Typography;
@@ -40,11 +40,14 @@ export class App extends Component {
   renderButton = () => {
     if (this.doneTasks().length) {
       return(
-        <Row type="flex" justify="center">
-          <Button onClick={() => this.props.showDoneTasks(this.props.showDone)}>
-            { this.props.showDone ? 'SEE ALL TASKS' : 'SEE DONE TASKS' }
-          </Button>
-        </Row>
+        <div>
+          <Divider />
+          <Row type="flex" justify="center">
+            <Button onClick={() => this.props.showDoneTasks(this.props.showDone)}>
+              { this.props.showDone ? 'SEE ALL TASKS' : 'SEE DONE TASKS' }
+            </Button>
+          </Row>
+        </div>
       )
     }
   }

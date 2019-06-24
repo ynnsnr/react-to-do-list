@@ -69,7 +69,9 @@ export class Task extends Component {
 
   render() {
     return (
-      <List.Item style={{display: this.displayTask()}}>{ this.renderTask() }</List.Item>
+      <List.Item style={{display: this.displayTask()}}>
+        { this.renderTask() }
+      </List.Item>
     );
   }
 }
