@@ -6,6 +6,7 @@ import reducers from './reducers';
 import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
+import 'antd/dist/antd.css';
 
 const combinedReducers = combineReducers(reducers);
 const initialState = {
