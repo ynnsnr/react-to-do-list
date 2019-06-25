@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addTask, showDoneTasks } from '../actions';
 import {
-  Layout, Row, Progress, Form, Button, Input, Icon, Typography, Divider
+  Layout, Row, Progress, Form, Button, Input, Icon, Typography, Divider, Empty
 } from 'antd';
 
 const { Title } = Typography;
@@ -35,6 +35,16 @@ export class App extends Component {
 
   componentDidMount = () => {
     this.focusInput();
+  }
+
+  renderEmpty = () => {
+    if (!this.props.tasks.length) {
+      return(
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}
+               description={<span>No Task</span>}
+        />
+      )
+    }
   }
 
   renderButton = () => {
@@ -85,6 +95,7 @@ export class App extends Component {
             </Form.Item>
           </Form>
           <TasksList tasks={this.props.tasks} />
+          {this.renderEmpty()}
           {this.renderButton()}
         </div>
       </Layout>
