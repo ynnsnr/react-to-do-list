@@ -54,7 +54,7 @@ export class Task extends Component {
       <Row type="flex" justify="space-between" align="middle">
         <Row type="flex" align="middle">
           <Icon onClick={() => this.props.toggleDone(this.props.index)}
-                style={{ fontSize: '24px', marginRight: '4px' }}
+                style={{ fontSize: '20px', marginRight: '4px' }}
                 type={this.props.task.done ? 'check-square' : 'border'}
           />
           <Typography.Text strong delete={this.props.task.done}>
