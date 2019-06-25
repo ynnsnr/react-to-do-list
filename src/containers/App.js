@@ -38,7 +38,7 @@ export class App extends Component {
   }
 
   renderButton = () => {
-    if (this.doneTasks().length) {
+    if (this.doneTasks().length && this.props.tasks.length > 1) {
       return(
         <div>
           <Divider />
