@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleDone, deleteTask, editTask } from '../actions';
-import { Row, List, Form, Button, Input, Icon, Typography } from 'antd';
+import { toggleDone, deleteTask, editTask, showDoneTasks } from '../actions';
+import {
+  Row, List, Form, Button, Input, Icon, Typography, Popconfirm, message
+} from 'antd';
 
 export class Task extends Component {
   constructor(props) {
@@ -23,6 +25,12 @@ export class Task extends Component {
 
   displayTask = () => {
     return !this.props.task.done && this.props.showDone ? 'none' : 'block';
+  }
+
+  confirm = () => {
+    message.success('Successfully deleted task');
+    this.props.deleteTask(this.props.index);
+    this.props.showDoneTasks(true);
   }
 
   renderTask = () => {
@@ -54,14 +62,19 @@ export class Task extends Component {
           </Typography.Text>
         </Row>
         <div>
-          <Button type="info" onClick={this.toggleEdit}>
+          <Button type="info" onClick={this.toggleEdit} style={{width: '50px'}}>
             <Icon type="edit" />
           </Button>
-          <Button type="danger"
-                  onClick={() => this.props.deleteTask(this.props.index)}
+          <Popconfirm
+            title="Delete this task?"
+            onConfirm={() => this.confirm()}
+            okText="Yes"
+            cancelText="No"
           >
-            <Icon type="delete" />
-          </Button>
+            <Button type="danger" style={{width: '50px'}}>
+              <Icon type="delete" />
+            </Button>
+          </Popconfirm>
         </div>
       </Row>
     );
@@ -81,7 +94,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ toggleDone, deleteTask, editTask }, dispatch);
+  return bindActionCreators({
+    toggleDone, deleteTask, editTask, showDoneTasks
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);
